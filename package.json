@@ -1,0 +1,29 @@
+{
+  "name": "@klebba/element-server",
+  "author": "Casey Klebba",
+  "description": "Serves your element.",
+  "version": "1.0.0",
+  "license": "MIT",
+  "repository": "klebba/element-server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "lint": "eslint --quiet .",
+    "lint-strict": "eslint ."
+  },
+  "bin": {
+    "element-server": "bin/server.js"
+  },
+  "files": [
+    "/index.js"
+  ],
+  "dependencies": {
+    "koa": "^2.3.0",
+    "koa-mount": "^3.0.0",
+    "koa-static": "^4.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.9.0",
+    "eslint-config-klebba": "^1.0.2"
+  }
+}
