@@ -2,7 +2,7 @@
   "name": "@klebba/element-server",
   "author": "Casey Klebba",
   "description": "Serves your element.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "repository": "klebba/element-server",
   "main": "index.js",
@@ -15,7 +15,8 @@
     "element-server": "bin/server.js"
   },
   "files": [
-    "/index.js"
+    "/index.js",
+    "/bin"
   ],
   "dependencies": {
     "koa": "^2.3.0",
