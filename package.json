@@ -2,7 +2,7 @@
   "name": "@klebba/element-server",
   "author": "Casey Klebba",
   "description": "Serves your element.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "repository": "klebba/element-server",
   "main": "index.js",
