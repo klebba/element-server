@@ -12,33 +12,35 @@ function createServer(name, path, port, host, callback) {
     serverInfo: `element:${name}`,
   });
 
-  const server = http.createServer();
   const base = `/node_modules/${name}`;
 
-  server.on('request', (request, response) => {
-    request
-      .addListener('end', () => {
-        const forward = request.url.startsWith('/node_modules') === false;
-        const file = request.url.replace(base, '');
-        if (forward) {
-          response.writeHead(302, { Location: `/node_modules/${name}${file}` });
-          response.end();
-        } else {
-          fileServer.serve(request, response, (err, result) => {
-            // alias /node_modules/module-name to /
-            if (err && err.status === 404) {
-              request.url = file;
-              fileServer.serve(request, response);
-            }
-          });
+  const handler = (request, response) => {
+    const forward = request.url.startsWith('/node_modules') === false;
+    const file = request.url.replace(base, '');
+    if (forward) {
+      response.writeHead(302, { Location: `/node_modules/${name}${file}` });
+      response.end();
+    } else {
+      fileServer.serve(request, response, (err, result) => {
+        // catch 404's and try to resolve them using this alias:
+        // /node_modules/module-name/* --> ./*
+        if (err && err.status === 404) {
+          request.url = file;
+          fileServer.serve(request, response);
         }
-      })
-      .resume();
+      });
+    }
+  };
+
+  const server = http.createServer();
+
+  server.on('request', (request, response) => {
+    request.on('end', () => handler(request, response)).resume();
   });
 
-  server.listen(port, host, function() {
+  server.listen(port, host, () => {
     if (callback instanceof Function) {
-      callback(this.address());
+      callback(server.address());
     }
   });
 }
